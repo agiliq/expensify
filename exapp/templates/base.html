@@ -1,7 +1,7 @@
 <html>
-<head>
-<title> Agiliq Expense Tracker Application </title>
-{% block style %}
+  <head>
+    <title> Agiliq Expense Tracker Application </title>
+    {% block style %}
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel=s"tylesheet">
     <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
@@ -10,15 +10,42 @@
     <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/apple-touch-icon-57-precomposed.png">
     {% endblock style %}
     <script src="{{ STATIC_URL }}js/jquery.js"></script>
-</head>
-<body>
+  </head>
+  <body>
 
-<div class="container">
-{% block content %}
-{% endblock content %}
-</div>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- Be sure to leave the brand out there if you want it shown -->
+          <a class="brand" href="/">Agiliq Reimbursement Tracker</a>
+          
+          <!-- Everything you want hidden at 940px or less, place within here -->
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="http://agiliq.com">Agiliq.com</a></li>
+              <li class="divider-vertical"></li>
+              {% if user.is_authenticated %}
+              <li><a href="{% url profile %}">Personal Claims</a></li>
+              <li><a href="{% url reimburse %}">Claim a Reimbursement</a></li>
+              <li><a href="{% url aclogout %}">Logout</a></li>
+              {% else %}
+              <li><a href="{% url aclogin %}">Login</a></li>
+              {% endif %}
+            </ul>
+            <!-- .nav, .navbar-search, .navbar-form, etc -->
+          </div>
+          
+        </div>
+      </div>
+    </div>
 
-  <script src="{{ STATIC_URL }}js/bootstrap-transition.js"></script>
+    <div class="container">
+      {% block content %}
+      {% endblock content %}
+    </div>
+
+    <script src="{{ STATIC_URL }}js/bootstrap-transition.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-alert.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
@@ -31,5 +58,5 @@
     <script src="{{ STATIC_URL }}js/bootstrap-carousel.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
 
-</body>
+  </body>
 </html>

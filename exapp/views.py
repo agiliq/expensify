@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from forms import ExpenseCreationForm, CategoryCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-
+from django.contrib.auth.forms import AuthenticationForm
 def aclogout(request):
 
     logout(request)
@@ -26,7 +26,7 @@ def aclogin(request):
         else:
             return HttpResponse('invalid login')
     else:
-        return render(request, 'index.html', {'form': form})
+        return render(request, 'index.html', {'form': form, 'login':'login'})
 
 '''
 def claims(request):
