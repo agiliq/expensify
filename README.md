@@ -1,5 +1,5 @@
-
-ify
+=======
+Expensify
 ==========
 
 ### What is it?
@@ -19,3 +19,4 @@ A django app to claim and track your reimbursements and expense claims. Work in 
 ### requirements
 
 See requirements.txt
+=======
