@@ -1,4 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
-This is the index page. 
+
+
+{% if form %}
+
+
+<form method="POST" action""> 
+  {% csrf_token %}
+  <table>
+    {% for field in form %}
+    <div class="fieldWrapper">
+      {{ field.errors }}
+      <p>{{ field.label_tag }} {{ field }}</p>
+    </div>
+    {% endfor %}
+  </table>
+  <input type="submit" value="Submit Form"/>
+</form>
+
+{% if not category %}
+<a href="{% url create %}"> Add another category. </a>
+{% endif %}
+
+
+{% else %}
+
+<p>Welcome to the agiliq reimbursement app!</p>
+
+<a href="{% url reimburse %}">Claim a reimbursement!</a>
+
+
+{% endif %}
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" /> 
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.5.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
+
+<script>
+  $(function() {
+  $( "#id_date" ).datepicker();
+  });
+</script>
+
 {% endblock content %}
