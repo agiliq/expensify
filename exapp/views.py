@@ -41,7 +41,7 @@ def index(request):
 
 def profile(request):
 
-    u = UserProfile.objects.filter(usr.user=request.user)
+    u = UserProfile.objects.filter(usr__user=request.user)
     return render(request, 'index.html', {'details':u, 'profile':'profile'})
 
 def create(request):
