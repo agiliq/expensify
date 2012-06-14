@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% if profile and request.user.is_authenticated %}
+<table>
+<th>
+<td> Expense Category </td>
+<td> Amount </td>
+<td> Date </td>
+<td>  Status </td>
+</th>
+
+{% for detail in details %}
+<td> {{ detail.expense_category }} </td>
+<td> {{ detail.amount }} </td>
+<td> {{ detail.date }} </td>
+<td> {{ detail.status }} </td>
+</table>
+
+{% endfor %}
+
+{% endif %}
 
 {% if form %}
 

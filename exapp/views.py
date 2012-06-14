@@ -28,16 +28,21 @@ def aclogin(request):
     else:
         return render(request, 'index.html', {'form': form})
 
-
+'''
 def claims(request):
     
     u = UserProfile.objects.all()
     return render(request, 'index.html', {'claims':u})
+'''
 
 def index(request):
     
     return render(request, 'index.html', {})
 
+def profile(request):
+
+    u = UserProfile.objects.filter(usr.user=request.user)
+    return render(request, 'index.html', {'details':u, 'profile':'profile'})
 
 def create(request):
     
@@ -56,6 +61,6 @@ def reimburse(request):
 
     if form.is_valid():
         form.save(request)
-        return redirect(reverse('claims'))
+        return redirect(reverse('profile'))
 
     return render(request, 'index.html', {'form': form})
