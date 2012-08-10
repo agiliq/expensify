@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
 
 
@@ -51,3 +51,10 @@ def notify_via_mail(sender, **kwargs):
               fail_silently=False)
 
 post_save.connect(notify_via_mail, sender=Expense)
+
+def change_username(sender, **kwargs):
+    instance = kwargs['instance']
+    if instance.username[0:6] == 'openid':
+        instance.username = instance.email[0:-11]
+
+pre_save.connect(change_username, sender=User)
