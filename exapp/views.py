@@ -5,28 +5,13 @@ from forms import ExpenseCreationForm, CategoryCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
-def aclogout(request):
+
+from models import ExpenseCategory, Expense
+
+def oidlogout(request):
 
     logout(request)
     return redirect('/')
-
-def aclogin(request):
-    redirect_to = request.REQUEST.get('next', '/')
-    form = AuthenticationForm(data=request.POST or None)
-    if request.POST and form.is_valid():
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect(redirect_to)
-            else:
-                return HttpResponse('disabled account')
-        else:
-            return HttpResponse('invalid login')
-    else:
-        return render(request, 'index.html', {'form': form, 'login':'login'})
 
 '''
 def claims(request):
@@ -41,8 +26,11 @@ def index(request):
 
 def profile(request):
 
-    u = UserProfile.objects.filter(usr__user=request.user)
-    return render(request, 'index.html', {'details':u, 'profile':'profile'})
+    e = Expense.objects.filter(usr=request.user)
+    total_amount = 0
+    for exp in e:
+        total_amount += exp.amount
+    return render(request, 'index.html', {'details': e, 'profile':'profile', 'total_amount': total_amount})
 
 def create(request):
     

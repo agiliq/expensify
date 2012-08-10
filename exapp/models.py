@@ -15,19 +15,19 @@ class ExpenseCategory(models.Model):
         return self.title
     
 
-class UserProfile(models.Model):
+class Expense(models.Model):
 
-    usr = models.OneToOneField(User)
-    expense_category = models.ForeignKey(ExpenseCategory)
+    usr = models.ForeignKey(User)
+    category = models.ForeignKey(ExpenseCategory)
     amount = models.DecimalField(max_digits=10,
             decimal_places=0, default=0)
     date = models.DateField(auto_now_add=False)
-    total_amount_claimed_till_date = models.DecimalField(max_digits=10,
-            decimal_places=0, default=0)
     status = models.BooleanField()
 
     def __unicode__(self):
-        return self.user
+        return "%s %s" %(self.usr.first_name, self.usr.last_name)
+    class Meta:
+        ordering = ['-date']
 
 def notify_via_mail(sender, **kwargs):
     instance = kwargs['instance']
@@ -35,12 +35,12 @@ def notify_via_mail(sender, **kwargs):
     recipients = \
         list(User.objects.filter(is_superuser=True).values_list('email'
              , flat=True))
-    recipients.append(instance.usr.user.email)
+    recipients.append(instance.usr.email)
     
     if kwargs['created']:
-        subject = 'Reimbursement Claim Created by %s' % instance.usr.user
+        subject = 'Reimbursement Claim Created by %s' % instance.usr.username
         email_body = "A new reimbursement claim under category %s, amount %s has been created on date %s." \
-            %(instance.expense_category, instance.amount, instance.date)
+            %(instance.category, instance.amount, instance.date)
     
     if instance.status == True:
         subject = 'Reimursement Claim Approved'
@@ -50,4 +50,4 @@ def notify_via_mail(sender, **kwargs):
     send_mail(subject, email_body, 'expensify@agiliq.com', recipients,
               fail_silently=False)
 
-post_save.connect(notify_via_mail, sender=UserProfile)
+post_save.connect(notify_via_mail, sender=Expense)

@@ -6,6 +6,6 @@ urlpatterns = patterns(
     url(r'^reimburse/$', 'reimburse', name='reimburse'),
     url(r'^create/$', 'create', name='create'),
     url(r'^profile/$', 'profile', name='profile'),
-    url(r'^accounts/login/$', 'aclogin', name='aclogin'),
-    url(r'^accounts/logout/$', 'aclogout', name='aclogout'),      
+    url(r'^openid/', include('django_openid_auth.urls')),
+    url(r'^openid/logout/$', 'oidlogout', name='oidlogout'),      
  )
