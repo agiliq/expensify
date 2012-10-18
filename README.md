@@ -18,8 +18,10 @@ A django app to claim and track your reimbursements and expense claims. Work in 
 
 ### Installation
 
-pip install -r requirements.txt
-create a `expensify/local_settings.py` and fill it with correct values.
+1. pip install -r requirements.txt
+2. create a `expensify/local_settings.py` and fill it with correct values.
+3. Add email settings to send email.
+3. (Optionally) Update `OPENID_SSO_SERVER_URL`
 
 
 ### requirements
