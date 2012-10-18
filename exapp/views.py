@@ -37,7 +37,7 @@ def create(request):
 
     return render(request, 'index.html', {'form': form, 'category':'category'})
 
-    
+@login_required
 def reimburse(request):
     
     form = ExpenseCreationForm(data=request.POST or None)

@@ -30,3 +30,10 @@ class SimpleViews(TestCase):
         self.c.login(username="demo", password="demo")
         response = self.c.get("/create/",)
         self.assertEqual(response.status_code, 200)          
+
+    def test_reimburse(self):
+        response = self.c.get("/reimburse/",)
+        self.assertEqual(response.status_code, 302)        
+        self.c.login(username="demo", password="demo")
+        response = self.c.get("/reimburse/",)
+        self.assertEqual(response.status_code, 200)          
