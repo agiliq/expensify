@@ -1,12 +1,16 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+from django.core import mail
+
+from exapp.models import ExpenseCategory, Expense
 
 
 class SimpleViews(TestCase):
     def setUp(self):
         self.c = Client()
         self.user = User.objects.create_user(username="demo", password="demo")
-        self.c.login()
+        self.category = ExpenseCategory.objects.create(title = "Foo", 
+            description = "Bar")
 
     def test_index(self):
         "Index reponds correctly to both logged in and logged out users"
@@ -36,4 +40,17 @@ class SimpleViews(TestCase):
         self.assertEqual(response.status_code, 302)        
         self.c.login(username="demo", password="demo")
         response = self.c.get("/reimburse/",)
-        self.assertEqual(response.status_code, 200)          
+        self.assertEqual(response.status_code, 200)    
+
+    def test_reimburse_post(self):
+        "Test that an Expense object is created and a mail is sent."
+        self.c.login(username="demo", password="demo")
+        response = self.c.post("/reimburse/",
+            {"date": "10/04/2012", 
+            "amount": 100,
+            "category": self.category.pk, 
+            }
+            )
+        self.assertEqual(response.status_code, 302)        
+        self.assertEqual(Expense.objects.count(), 1)
+        self.assertEqual(len(mail.outbox), 1)

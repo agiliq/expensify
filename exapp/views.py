@@ -24,7 +24,9 @@ def profile(request):
     total_amount = 0
     for exp in e:
         total_amount += exp.amount
-    return render(request, 'index.html', {'details': e, 'profile':'profile', 'total_amount': total_amount})
+    return render(request, 'index.html', {'details': e, 
+                        'profile':'profile', 
+                        'total_amount': total_amount})
 
 @login_required
 def create(request):

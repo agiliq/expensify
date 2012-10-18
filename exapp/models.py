@@ -22,7 +22,8 @@ class Expense(models.Model):
     amount = models.DecimalField(max_digits=10,
             decimal_places=0, default=0)
     date = models.DateField(auto_now_add=False)
-    status = models.BooleanField()
+    #A expense claim starts as unpaid.
+    status = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s %s" %(self.usr.first_name, self.usr.last_name)
