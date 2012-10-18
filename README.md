@@ -16,7 +16,13 @@ A django app to claim and track your reimbursements and expense claims. Work in 
 6. Admin gets email when a new expense claim is added.
 7. User gets email when an expense claim is marked as paid by the user.
 
+### Installation
+
+pip install -r requirements.txt
+create a `expensify/local_settings.py` and fill it with correct values.
+
+
 ### requirements
 
 See requirements.txt
-=======
+
