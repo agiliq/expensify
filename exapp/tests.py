@@ -54,3 +54,21 @@ class SimpleViews(TestCase):
         self.assertEqual(response.status_code, 302)        
         self.assertEqual(Expense.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
+
+
+class TestModels(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="demo", password="demo")
+        self.category = ExpenseCategory.objects.create(title = "Foo", 
+            description = "Bar")
+
+    def test_emails(self):
+        "Creating Expense objects and changing their status should send mails"
+        expense = Expense.objects.create(amount=100, date="2012-10-13", 
+            category=self.category, usr=self.user)
+        self.assertEqual(len(mail.outbox), 1)
+        expense.status = True
+        expense.save()
+        self.assertEqual(len(mail.outbox), 2)
+
+
