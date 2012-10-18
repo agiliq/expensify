@@ -13,13 +13,6 @@ def oidlogout(request):
     logout(request)
     return redirect('/')
 
-'''
-def claims(request):
-    
-    u = UserProfile.objects.all()
-    return render(request, 'index.html', {'claims':u})
-'''
-
 def index(request):
     
     return render(request, 'index.html', {})
@@ -33,6 +26,7 @@ def profile(request):
         total_amount += exp.amount
     return render(request, 'index.html', {'details': e, 'profile':'profile', 'total_amount': total_amount})
 
+@login_required
 def create(request):
     
     form = CategoryCreationForm(data=request.POST or None)

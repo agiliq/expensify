@@ -22,4 +22,11 @@ class SimpleViews(TestCase):
         self.assertEqual(response.status_code, 302)        
         self.c.login(username="demo", password="demo")
         response = self.c.get("/profile/",)
-        self.assertEqual(response.status_code, 200)        
+        self.assertEqual(response.status_code, 200)  
+
+    def test_create(self):
+        response = self.c.get("/create/",)
+        self.assertEqual(response.status_code, 302)        
+        self.c.login(username="demo", password="demo")
+        response = self.c.get("/create/",)
+        self.assertEqual(response.status_code, 200)          
