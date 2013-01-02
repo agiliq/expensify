@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from models import Expense, ExpenseCategory
 
 
@@ -22,3 +23,14 @@ class ExpenseCreationForm(ModelForm):
         model.save()
 
         return model
+
+    def clean_amount(self):
+        amount = self.cleaned_data['amount']
+        max_limit = self.cleaned_data['category'].max_limit
+        if amount > max_limit:
+            raise forms.ValidationError("Max limit for this category is %s" % (max_limit))
+        else:
+            return amount
+
+            
+
