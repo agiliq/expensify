@@ -4,7 +4,7 @@ from models import ExpenseCategory, Expense
 
 
 class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ('usr', 'category', 'amount', 'status')
+    list_display = ('usr', 'category', 'amount', 'status', 'description')
     list_filter = ('usr', 'category', 'status')
 
 
