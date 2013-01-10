@@ -4,10 +4,12 @@ PROJECT_DIR = os.path.dirname(__file__)
 
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Bhaskar', 'bhaskar@agiliq.com'),
+    ('Shabda Raaj', 'shabda@agiliq.com'),
 )
 
 MANAGERS = ADMINS
+SERVER_EMAIL = 'expensify@agiliq.com'
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -127,6 +129,7 @@ OPENID_CREATE_USERS = True
 # When logging in again, should we overwrite user details based on
 # data received via Simple Registration?
 OPENID_UPDATE_DETAILS_FROM_SREG = True
+
 
 # If set, always use this as the identity URL rather than asking the
 # user.  This only makes sense if it is a server URL.
