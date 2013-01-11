@@ -29,6 +29,8 @@ class ExpenseCreationForm(ModelForm):
         max_limit = self.cleaned_data['category'].max_limit
         if amount > max_limit:
             raise forms.ValidationError("Max limit for this category is %s" % (max_limit))
+        elif amount <= 0:
+            raise forms.ValidationError("Amount should be greater than 0.")
         else:
             return amount
 
