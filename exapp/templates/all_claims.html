@@ -1,0 +1,29 @@
+
+{% extends "base.html" %}
+{% block content %}
+<form action='' method='post' >
+    {% csrf_token %}
+    <table class='table table-bordered'>
+        <th><input type='checkbox' id='check_all' /></th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th></th>
+        {% for e in expenses %}
+        <tr>
+            <td><input type='checkbox' class='cb_claims' id='{{ e.id }}' /></td>
+            <td>{{ e.category }}</td>
+            <td>{{ e.amount  }}</td>
+            <td>{{ e.date  }}</td>
+            <td>{{ e.status  }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    <input type='hidden' name='mark_as' value='' />
+    <input type='hidden' name='selected' value='' />
+    <input type='submit' class='btn btn-primary mark_as_claimed' value='Mark as claimed' /> 
+    <input type='submit' class='btn btn-primary mark_as_not_claimed' value='Mark as not claimed' /> 
+</form>
+{% endblock %}

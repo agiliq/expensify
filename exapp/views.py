@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 
 from models import ExpenseCategory, Expense
 from forms import ExpenseCreationForm, CategoryCreationForm
@@ -49,3 +52,23 @@ def reimburse(request):
         return redirect(reverse('profile'))
 
     return render(request, 'index.html', {'form': form})
+
+@staff_member_required
+@csrf_exempt
+def all_claims(request):
+    if request.method == 'POST':
+        selected = request.POST['selected'].split(";")
+        mark_as = request.POST['mark_as']
+        if not (mark_as == "False" or mark_as == "True"):
+            raise Http404
+        if mark_as == "False":
+            mark_as = ""
+        for item in selected:
+            exp_obj = Expense.objects.get(id=item)
+            exp_obj.status = bool(mark_as)
+            exp_obj.save()
+    expenses = Expense.objects.all()
+    data = {'expenses': expenses}
+    return render_to_response('all_claims.html', data,
+            context_instance=RequestContext(request))
+
