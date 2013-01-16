@@ -67,7 +67,7 @@ def all_claims(request):
             exp_obj = Expense.objects.get(id=item)
             exp_obj.status = bool(mark_as)
             exp_obj.save()
-    expenses = Expense.objects.all()
+    expenses = Expense.objects.filter(status=False)
     data = {'expenses': expenses}
     return render_to_response('all_claims.html', data,
             context_instance=RequestContext(request))

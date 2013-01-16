@@ -5,6 +5,7 @@
     {% csrf_token %}
     <table class='table table-bordered'>
         <th><input type='checkbox' id='check_all' /></th>
+        <th>Name</th>
         <th>Category</th>
         <th>Amount</th>
         <th>Date</th>
@@ -13,6 +14,7 @@
         {% for e in expenses %}
         <tr>
             <td><input type='checkbox' class='cb_claims' id='{{ e.id }}' /></td>
+            <td>{{ e.usr.first_name }} {{ e.usr.last_name }}</td>
             <td>{{ e.category }}</td>
             <td>{{ e.amount  }}</td>
             <td>{{ e.date  }}</td>
@@ -24,6 +26,5 @@
     <input type='hidden' name='mark_as' value='' />
     <input type='hidden' name='selected' value='' />
     <input type='submit' class='btn btn-primary mark_as_claimed' value='Mark as claimed' /> 
-    <input type='submit' class='btn btn-primary mark_as_not_claimed' value='Mark as not claimed' /> 
 </form>
 {% endblock %}
