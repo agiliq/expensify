@@ -24,7 +24,14 @@ class ExpenseCreationForm(ModelForm):
 
         return model
 
+
+
+
     def clean_amount(self):
+        try:
+            self.cleaned_data['category']
+        except KeyError:
+            raise forms.ValidationError("Select Category")
         amount = self.cleaned_data['amount']
         max_limit = self.cleaned_data['category'].max_limit
         if amount > max_limit:
