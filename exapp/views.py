@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from models import ExpenseCategory, Expense
 from forms import ExpenseCreationForm, CategoryCreationForm
 
+from datetime import datetime
+
 def oidlogout(request):
 
     logout(request)
@@ -22,13 +24,14 @@ def index(request):
 
 @login_required
 def profile(request):
+    current_year = datetime.now().year
+    e = Expense.objects.filter(usr=request.user, date__year=current_year)
 
-    e = Expense.objects.filter(usr=request.user)
     total_amount = 0
     for exp in e:
         total_amount += exp.amount
-    return render(request, 'index.html', {'details': e, 
-                        'profile':'profile', 
+    return render(request, 'index.html', {'details': e,
+        'profile':'profile', 'current_year': current_year,
                         'total_amount': total_amount})
 
 @login_required
