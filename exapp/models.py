@@ -25,6 +25,7 @@ class Expense(models.Model):
     #A expense claim starts as unpaid.
     status = models.BooleanField(default=False)
     description = models.TextField()
+    invoice = models.FileField(upload_to='invoices', null=True, blank=True)
 
     def __unicode__(self):
         return "%s %s" %(self.usr.first_name, self.usr.last_name)
