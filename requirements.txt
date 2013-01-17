@@ -1,10 +1,6 @@
 django
 django-openid-auth
-django-authopenid
 south
 gunicorn
 MySQL-python
 # uninstall python-openid and install git+https://github.com/adieu/python-openid
-
-
-
