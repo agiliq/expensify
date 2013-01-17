@@ -20,7 +20,7 @@ class Expense(models.Model):
     usr = models.ForeignKey(User)
     category = models.ForeignKey(ExpenseCategory)
     amount = models.DecimalField(max_digits=10,
-            decimal_places=0, default=0)
+            decimal_places=0)
     date = models.DateField(auto_now_add=False)
     #A expense claim starts as unpaid.
     status = models.BooleanField(default=False)
