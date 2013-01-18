@@ -45,7 +45,7 @@ def notify_via_mail(sender, **kwargs):
         email_body = "A new reimbursement claim under category %s, amount %s has been created on date %s.\nDescription : %s" \
             %(instance.category, instance.amount, instance.date, instance.description)
     
-    if instance.status == True:
+    if instance.status:
         subject = 'Reimursement Claim Approved'
         email_body = "Your Reimursement Claim dated %s has been approved. An amount of %s has been credited to your account.\nDescription : %s"\
             %(instance.date, instance.amount, instance.description)
