@@ -40,7 +40,7 @@ def create(request):
     form = CategoryCreationForm(data=request.POST or None)
 
     if form.is_valid():
-        form.save(request)
+        form.save()
         return redirect(reverse('reimburse'))
 
     return render(request, 'index.html', {'form': form, 'category':'category'})
