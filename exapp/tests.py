@@ -10,7 +10,8 @@ class SimpleViews(TestCase):
         self.c = Client()
         self.user = User.objects.create_user(username="demo", password="demo")
         self.category = ExpenseCategory.objects.create(title = "Foo", 
-            description = "Bar")
+            description = "Bar",
+            max_limit=200)
 
     def test_index(self):
         "Index reponds correctly to both logged in and logged out users"
@@ -49,6 +50,7 @@ class SimpleViews(TestCase):
             {"date": "10/04/2012", 
             "amount": 100,
             "category": self.category.pk, 
+            "description": "foo"
             }
             )
         self.assertEqual(response.status_code, 302)        
