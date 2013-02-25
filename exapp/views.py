@@ -24,7 +24,7 @@ def index(request):
 @login_required
 def profile(request):
     current_year = datetime.now().year
-    e = Expense.objects.filter(usr=request.user, date__year=current_year)
+    e = Expense.objects.filter(usr=request.user, date__year=current_year).order_by('status', '-date')
 
     total_amount = 0
     for exp in e:
