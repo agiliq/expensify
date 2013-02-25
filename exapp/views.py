@@ -1,14 +1,13 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, Http404
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 
-from models import ExpenseCategory, Expense
+from models import Expense
 from forms import ExpenseCreationForm, CategoryCreationForm
 
 from datetime import datetime
