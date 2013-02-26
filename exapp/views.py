@@ -92,3 +92,12 @@ def all_claims(request):
     return render_to_response('all_claims.html', data,
             context_instance=RequestContext(request))
 
+
+@staff_member_required
+@csrf_exempt
+def approved_claims(request):
+    expenses = Expense.objects.filter(status=True, rejected=False)
+    data = {'expenses': expenses}
+    return render_to_response('approved_claims.html', data,
+            context_instance=RequestContext(request))
+

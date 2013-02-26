@@ -31,6 +31,7 @@
               {% if user.is_authenticated %}
                 {% if user.is_staff %}
                     <li><a href='{% url all_claims %}'>All Claims</a></li>
+                    <li><a href='{% url approved_claims %}'>Approved Claims</a></li>
                 {% endif %}
               <li><a href="{% url profile %}">Personal Claims</a></li>
               <li><a href="{% url reimburse %}">Claim a Reimbursement</a></li>
