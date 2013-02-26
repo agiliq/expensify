@@ -44,6 +44,10 @@
       }
       return $("#expense-detail").modal();
     }
+  }), $("body").on({
+    keyup: function(e) {
+      if (e.keyCode === 27) return $("#expense-detail").modal("hide");
+    }
   }));
 
   $("#check_all").live({

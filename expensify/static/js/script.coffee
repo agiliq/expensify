@@ -41,6 +41,11 @@ $(".action_button").live
       $("#expense-detail").modal()
 
 
+  $("body").on
+    keyup: (e) ->
+      if e.keyCode == 27
+        $("#expense-detail").modal("hide")
+
 
 
 $("#check_all").live
