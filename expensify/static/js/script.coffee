@@ -42,45 +42,6 @@ $(".action_button").live
 
 
 
-    #$(".mark_as_claimed").live
-    #  click: (e)->
-    #    e.preventDefault()
-    #    $("[name='mark_as']").val "True"
-    #    selected_claims = ""
-    #    for cb in $(".cb_claims")
-    #      if $(cb).attr("checked")
-    #        selected_claims += cb.id+";"
-    #    selected_claims = selected_claims.substr(0, selected_claims.length-1)
-    #
-    #    $("[name='selected']").val selected_claims
-    #    $(@).closest('form').submit()
-    #
-    #
-    #$(".rejected").live
-    #  click: (e)->
-    #    e.preventDefault()
-    #    $("[name='mark_as']").val "rejected"
-    #    selected_claims = ""
-    #    for cb in $(".cb_claims")
-    #      if $(cb).attr("checked")
-    #        selected_claims += cb.id+";"
-    #    selected_claims = selected_claims.substr(0, selected_claims.length-1)
-    #
-    #    $("[name='selected']").val selected_claims
-    #    $(@).closest('form').submit()
-    #
-    #$(".mark_as_not_claimed").live
-    #  click: (e)->
-    #    e.preventDefault()
-    #    $("[name='mark_as']").val "False"
-    #    selected_claims = ""
-    #    for cb in $(".cb_claims")
-    #      if $(cb).attr("checked")
-    #        selected_claims += cb.id+";"
-    #    selected_claims = selected_claims.substr(0, selected_claims.length-1)
-    #
-    #    $("[name='selected']").val selected_claims
-    #    $(@).closest('form').submit()
 
 $("#check_all").live
   click: ->
