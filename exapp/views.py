@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout
 from django.http import Http404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.template import RequestContext
@@ -61,7 +62,15 @@ def reimburse(request):
 def all_claims(request):
     if request.method == 'POST':
         selected = request.POST['selected'].split(";")
+        if len(selected) == 0 or selected[0] == u'':
+            messages.add_message(request, messages.ERROR, 'Please select atleast one before submitting.')
+            expenses = Expense.objects.filter(status=False)
+            data = {'expenses': expenses}
+            return render_to_response('all_claims.html', data,
+                    context_instance=RequestContext(request))
+
         mark_as = request.POST['mark_as']
+
         if not (mark_as == "False" or mark_as == "True"):
             raise Http404
         if mark_as == "False":

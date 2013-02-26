@@ -45,6 +45,13 @@
       </div>
     </div>
 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="alert-{{ message.tags }} custom-alert"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     <div class="container">
       {% block content %}
       {% endblock content %}
