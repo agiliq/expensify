@@ -24,6 +24,7 @@ class Expense(models.Model):
     date = models.DateField(auto_now_add=False)
     #A expense claim starts as unpaid.
     status = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
     description = models.TextField()
     invoice = models.FileField(upload_to='invoices', null=True, blank=True)
 
