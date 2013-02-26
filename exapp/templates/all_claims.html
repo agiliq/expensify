@@ -10,7 +10,6 @@
         <th>Amount</th>
         <th>Date</th>
         <th>Status</th>
-        <th></th>
         {% for e in expenses %}
         <tr>
             <td><input type='checkbox' class='cb_claims' id='{{ e.id }}' /></td>
@@ -18,13 +17,14 @@
             <td>{{ e.category }}</td>
             <td>{{ e.amount  }}</td>
             <td>{{ e.date  }}</td>
-            <td>{{ e.status  }}</td>
+            <td>{%  if e.rejected %}Rejected{% else %} {{ e.status }} {% endif %}</td>
 
         </tr>
         {% endfor %}
     </table>
     <input type='hidden' name='mark_as' value='' />
     <input type='hidden' name='selected' value='' />
-    <input type='submit' class='btn btn-primary mark_as_claimed' value='Mark as claimed' /> 
+    <input type='submit' class='btn btn-primary  action_button' action='mark_as_claimed' value='Mark as claimed' /> 
+    <input type='submit' class='btn btn-primary  action_button' action='rejected' value='Reject' /> 
 </form>
 {% endblock %}
