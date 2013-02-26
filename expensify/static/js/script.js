@@ -30,6 +30,7 @@
       id = e.id;
       if ($(".field_name").length > 0) {
         $(".td_name").text($(this).find(".field_name").text());
+        $("#expense-detail").find(".modal-header h3").html("Expense details for " + $(this).find(".field_name").text());
       }
       $(".td_category").text($(this).find(".field_category").text());
       $(".td_amount").text($(this).find(".field_amount").text());

@@ -27,6 +27,7 @@ $(".action_button").live
       id = e.id
       if $(".field_name").length > 0
         $(".td_name").text $(@).find(".field_name").text()
+        $("#expense-detail").find(".modal-header h3").html "Expense details for "+$(@).find(".field_name").text()
 
       $(".td_category").text $(@).find(".field_category").text()
       $(".td_amount").text $(@).find(".field_amount").text()
