@@ -13,7 +13,7 @@ class ExpenseCreationForm(ModelForm):
 
     class Meta:
         model = Expense
-        exclude = ('usr', 'status')
+        exclude = ('usr', 'status', 'rejected')
 
     def save(self, request, commit=True):
         model = super(ExpenseCreationForm, self).save(commit=False)
