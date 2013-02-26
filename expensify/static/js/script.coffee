@@ -25,7 +25,9 @@ $(".action_button").live
     click: (e) ->
       e.preventDefault()
       id = e.id
-      console.log $(@).find(".field_category")
+      if $(".field_name").length > 0
+        $(".td_name").text $(@).find(".field_name").text()
+
       $(".td_category").text $(@).find(".field_category").text()
       $(".td_amount").text $(@).find(".field_amount").text()
       $(".td_date").text $(@).find(".field_date").text()
@@ -33,10 +35,11 @@ $(".action_button").live
       $(".td_description").text $(@).find(".description").val()
       if $(@).find(".invoice").val().trim().length > 0
         url_name_arr = $(@).find(".invoice").val().split(";")
-        $(".td_invoice").html "<a href='#{url_name_arr[0]}'>#{url_name_arr[1]}</a>"
+        $(".td_invoice").html "<a href='#{url_name_arr[0]}' target='_blank' >#{url_name_arr[1]}</a>"
       else
         $(".td_invoice").text  "Not provided"
       $("#expense-detail").modal()
+
 
 
     #$(".mark_as_claimed").live

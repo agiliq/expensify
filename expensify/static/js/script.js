@@ -28,7 +28,9 @@
       var id, url_name_arr;
       e.preventDefault();
       id = e.id;
-      console.log($(this).find(".field_category"));
+      if ($(".field_name").length > 0) {
+        $(".td_name").text($(this).find(".field_name").text());
+      }
       $(".td_category").text($(this).find(".field_category").text());
       $(".td_amount").text($(this).find(".field_amount").text());
       $(".td_date").text($(this).find(".field_date").text());
@@ -36,7 +38,7 @@
       $(".td_description").text($(this).find(".description").val());
       if ($(this).find(".invoice").val().trim().length > 0) {
         url_name_arr = $(this).find(".invoice").val().split(";");
-        $(".td_invoice").html("<a href='" + url_name_arr[0] + "'>" + url_name_arr[1] + "</a>");
+        $(".td_invoice").html("<a href='" + url_name_arr[0] + "' target='_blank' >" + url_name_arr[1] + "</a>");
       } else {
         $(".td_invoice").text("Not provided");
       }
