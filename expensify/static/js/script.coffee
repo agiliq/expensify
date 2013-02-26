@@ -1,10 +1,17 @@
 $(document).ready ->
   $(".nav li").removeClass("active").find("a[href='#{window.location.pathname}']").closest("li").addClass("active")
 
-$(".mark_as_claimed").live
+
+
+$(".action_button").live
   click: (e)->
     e.preventDefault()
-    $("[name='mark_as']").val "True"
+    if $(@).attr("action") == "mark_as_claimed"
+      $("[name='mark_as']").val "True"
+    else if $(@).attr("action") == "rejected"
+      $("[name='mark_as']").val "rejected"
+
+
     selected_claims = ""
     for cb in $(".cb_claims")
       if $(cb).attr("checked")
@@ -14,19 +21,63 @@ $(".mark_as_claimed").live
     $("[name='selected']").val selected_claims
     $(@).closest('form').submit()
 
+  $(".expense-list tr").live
+    click: (e) ->
+      e.preventDefault()
+      id = e.id
+      console.log $(@).find(".field_category")
+      $(".td_category").text $(@).find(".field_category").text()
+      $(".td_amount").text $(@).find(".field_amount").text()
+      $(".td_date").text $(@).find(".field_date").text()
+      $(".td_status").text $(@).find(".field_status").text()
+      $(".td_description").text $(@).find(".description").val()
+      if $(@).find(".invoice").val().trim().length > 0
+        url_name_arr = $(@).find(".invoice").val().split(";")
+        $(".td_invoice").html "<a href='#{url_name_arr[0]}'>#{url_name_arr[1]}</a>"
+      else
+        $(".td_invoice").text  "Not provided"
+      $("#expense-detail").modal()
 
-$(".mark_as_not_claimed").live
-  click: (e)->
-    e.preventDefault()
-    $("[name='mark_as']").val "False"
-    selected_claims = ""
-    for cb in $(".cb_claims")
-      if $(cb).attr("checked")
-        selected_claims += cb.id+";"
-    selected_claims = selected_claims.substr(0, selected_claims.length-1)
 
-    $("[name='selected']").val selected_claims
-    $(@).closest('form').submit()
+    #$(".mark_as_claimed").live
+    #  click: (e)->
+    #    e.preventDefault()
+    #    $("[name='mark_as']").val "True"
+    #    selected_claims = ""
+    #    for cb in $(".cb_claims")
+    #      if $(cb).attr("checked")
+    #        selected_claims += cb.id+";"
+    #    selected_claims = selected_claims.substr(0, selected_claims.length-1)
+    #
+    #    $("[name='selected']").val selected_claims
+    #    $(@).closest('form').submit()
+    #
+    #
+    #$(".rejected").live
+    #  click: (e)->
+    #    e.preventDefault()
+    #    $("[name='mark_as']").val "rejected"
+    #    selected_claims = ""
+    #    for cb in $(".cb_claims")
+    #      if $(cb).attr("checked")
+    #        selected_claims += cb.id+";"
+    #    selected_claims = selected_claims.substr(0, selected_claims.length-1)
+    #
+    #    $("[name='selected']").val selected_claims
+    #    $(@).closest('form').submit()
+    #
+    #$(".mark_as_not_claimed").live
+    #  click: (e)->
+    #    e.preventDefault()
+    #    $("[name='mark_as']").val "False"
+    #    selected_claims = ""
+    #    for cb in $(".cb_claims")
+    #      if $(cb).attr("checked")
+    #        selected_claims += cb.id+";"
+    #    selected_claims = selected_claims.substr(0, selected_claims.length-1)
+    #
+    #    $("[name='selected']").val selected_claims
+    #    $(@).closest('form').submit()
 
 $("#check_all").live
   click: ->

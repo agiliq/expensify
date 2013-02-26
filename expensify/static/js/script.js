@@ -4,11 +4,15 @@
     return $(".nav li").removeClass("active").find("a[href='" + window.location.pathname + "']").closest("li").addClass("active");
   });
 
-  $(".mark_as_claimed").live({
+  $(".action_button").live({
     click: function(e) {
       var cb, selected_claims, _i, _len, _ref;
       e.preventDefault();
-      $("[name='mark_as']").val("True");
+      if ($(this).attr("action") === "mark_as_claimed") {
+        $("[name='mark_as']").val("True");
+      } else if ($(this).attr("action") === "rejected") {
+        $("[name='mark_as']").val("rejected");
+      }
       selected_claims = "";
       _ref = $(".cb_claims");
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -19,24 +23,26 @@
       $("[name='selected']").val(selected_claims);
       return $(this).closest('form').submit();
     }
-  });
-
-  $(".mark_as_not_claimed").live({
+  }, $(".expense-list tr").live({
     click: function(e) {
-      var cb, selected_claims, _i, _len, _ref;
+      var id, url_name_arr;
       e.preventDefault();
-      $("[name='mark_as']").val("False");
-      selected_claims = "";
-      _ref = $(".cb_claims");
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        cb = _ref[_i];
-        if ($(cb).attr("checked")) selected_claims += cb.id + ";";
+      id = e.id;
+      console.log($(this).find(".field_category"));
+      $(".td_category").text($(this).find(".field_category").text());
+      $(".td_amount").text($(this).find(".field_amount").text());
+      $(".td_date").text($(this).find(".field_date").text());
+      $(".td_status").text($(this).find(".field_status").text());
+      $(".td_description").text($(this).find(".description").val());
+      if ($(this).find(".invoice").val().trim().length > 0) {
+        url_name_arr = $(this).find(".invoice").val().split(";");
+        $(".td_invoice").html("<a href='" + url_name_arr[0] + "'>" + url_name_arr[1] + "</a>");
+      } else {
+        $(".td_invoice").text("Not provided");
       }
-      selected_claims = selected_claims.substr(0, selected_claims.length - 1);
-      $("[name='selected']").val(selected_claims);
-      return $(this).closest('form').submit();
+      return $("#expense-detail").modal();
     }
-  });
+  }));
 
   $("#check_all").live({
     click: function() {
