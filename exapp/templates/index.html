@@ -15,7 +15,7 @@
 <td class='field_category'> {{ detail.category }} </td>
 <td class='field_amount'>  {{ detail.amount }} </td>
 <td class='field_date'>  {{ detail.date }} </td>
-{% if detail.rejected %} <td class='field_status'>Rejected</td> {% else %} <td class='field_status'> {{ detail.status }}</td> {% endif %} 
+{% if detail.rejected %} <td class='field_status'>Rejected</td> {% else %} <td class='field_status'> {% if detail.status %} Claimed {% else %} Pending {% endif %}</td> {% endif %} 
 <input type=hidden class='description' value='{{ detail.description }}' />
 <input type=hidden class='invoice' value='{% if detail.invoice %} {{ detail.invoice.url }};{{ detail.invoice.name }} {% endif %}'  />
 </tr>

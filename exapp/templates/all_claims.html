@@ -17,7 +17,7 @@
             <td class='field_category' >{{ e.category }}</td>
             <td class='field_amount' >{{ e.amount  }}</td>
             <td class='field_date' >{{ e.date  }}</td>
-            <td class='field_status' >{%  if e.rejected %}Rejected{% else %} {{ e.status }} {% endif %}</td>
+            {% if detail.rejected %} <td class='field_status'>Rejected</td> {% else %} <td class='field_status'> {% if detail.status %} Claimed {% else %} Pending {% endif %}</td> {% endif %} 
             <input type=hidden class='description' value='{{ e.description }}' />
             <input type=hidden class='invoice' value='{% if e.invoice %} {{ e.invoice.url }};{{ e.invoice.name }} {% endif %}'  />
 
