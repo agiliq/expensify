@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
 
 
+
 class ExpenseCategory(models.Model):
     title = models.CharField(max_length=200)
     max_limit = models.DecimalField(max_digits=10,
@@ -37,9 +38,14 @@ class Expense(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     max_reimbursment = models.PositiveIntegerField(max_length=10)
+    total_requested_amount = models.PositiveIntegerField(max_length=10, default=0)
 
     def __unicode__(self):
         return unicode(self.user)
+
+
+
+
 
 def notify_via_mail(sender, **kwargs):
     instance = kwargs['instance']
@@ -68,6 +74,7 @@ def notify_via_mail(sender, **kwargs):
               fail_silently=False)
 
 post_save.connect(notify_via_mail, sender=Expense)
+
 
 
 def change_username(sender, **kwargs):

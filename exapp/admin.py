@@ -13,7 +13,7 @@ class ExpenseCategoryAdmin(admin.ModelAdmin):
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'max_reimbursment')
+    list_display = ('user', 'max_reimbursment', 'total_requested_amount')
 
 admin.site.register(ExpenseCategory, ExpenseCategoryAdmin)
 admin.site.register(Expense, ExpenseAdmin)
