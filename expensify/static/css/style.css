@@ -1,7 +1,7 @@
 .errorlist li { color:red; font-weight: bold; }
 .custom-alert { padding: 10px; list-style: none;}
+/*
 .table tr.rejected {background-color: red; color: white; }
-.table-disable {background-color: red; color: white; }
 .table-disable-hover.table tbody tr:hover td,
 .table-disable-hover.table tbody tr:hover th {
     background-color: inherit;
@@ -10,4 +10,5 @@
 .table-disable-hover tbody tr.rejected:hover th {
   background-color: red;
 }
+*/
 .expense-list tr { cursor: pointer; }
