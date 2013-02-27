@@ -9,5 +9,5 @@ urlpatterns = patterns(
     url(r'^create/$', 'create', name='create'),
     url(r'^profile/$', 'profile', name='profile'),
     url(r'^openid/', include('django_openid_auth.urls')),
-    url(r'^openid/logout/$', 'oidlogout', name='oidlogout'),      
- )
+    url(r'^openid/logout/$', 'oidlogout', name='oidlogout'),
+    )

@@ -14,14 +14,15 @@ from forms import ExpenseCreationForm, CategoryCreationForm
 
 from datetime import datetime
 
-def oidlogout(request):
 
+def oidlogout(request):
     logout(request)
     return redirect('/')
 
+
 def index(request):
-    
     return render(request, 'index.html', {})
+
 
 @login_required
 def profile(request):
@@ -44,29 +45,27 @@ def profile(request):
     except EmptyPage:
         e = paginator.page(paginator.num_pages)
 
-
-
     return render(request, 'index.html', {'details': e,
-        'profile':'profile', 'current_year': current_year,
-        'total_amount': total_amount, 'rejected_count': rejected_count,
-        'pending_count': pending_count, 'claimed_count': claimed_count})
+                  'profile': 'profile', 'current_year': current_year,
+                  'total_amount': total_amount, 'rejected_count': rejected_count,
+                  'pending_count': pending_count, 'claimed_count': claimed_count})
+
 
 @login_required
 def create(request):
-    
+
     form = CategoryCreationForm(data=request.POST or None)
 
     if form.is_valid():
         form.save()
         return redirect(reverse('reimburse'))
 
-    return render(request, 'index.html', {'form': form, 'category':'category'})
+    return render(request, 'index.html', {'form': form, 'category': 'category'})
+
 
 @login_required
 def reimburse(request):
-    
     form = ExpenseCreationForm(request.POST or None, request.FILES or None)
-
 
     if form.is_valid():
         form.save(request)
@@ -74,18 +73,20 @@ def reimburse(request):
 
     return render(request, 'index.html', {'form': form})
 
+
 @staff_member_required
 @csrf_exempt
 def all_claims(request):
     if request.method == 'POST':
         selected = request.POST['selected'].split(";")
         if (len(selected) == 0 or selected[0] == u''):
-            messages.add_message(request, messages.ERROR, 'Please select atleast one before submitting.')
+            messages.add_message(request, messages.ERROR,
+                                 'Please select atleast one before submitting.')
         else:
 
             mark_as = request.POST['mark_as']
 
-            if not ( mark_as == "True" or mark_as == 'rejected'):
+            if not (mark_as == "True" or mark_as == 'rejected'):
                 raise Http404
             status = False
             reject = False
@@ -105,7 +106,6 @@ def all_claims(request):
     rejected_count = expenses.filter(rejected=True).count()
     pending_count = expenses.filter(rejected=False).count()
 
-
     paginator = Paginator(expenses, 10)
     page = request.GET.get('page')
     try:
@@ -118,7 +118,7 @@ def all_claims(request):
     data = {'expenses': expenses, 'rejected_count': rejected_count,
             'pending_count': pending_count}
     return render_to_response('all_claims.html', data,
-            context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 
 @staff_member_required
@@ -136,5 +136,4 @@ def approved_claims(request):
         expenses = paginator.page(paginator.num_pages)
     data = {'expenses': expenses, 'approved_count': approved_count}
     return render_to_response('approved_claims.html', data,
-            context_instance=RequestContext(request))
-
+                              context_instance=RequestContext(request))
