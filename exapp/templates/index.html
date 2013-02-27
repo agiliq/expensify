@@ -41,7 +41,7 @@
 </div>
 
 <p> You have exhausted Rs.{{ total_amount }} of
-    Rs.10,000 for the year {{ current_year }}.</p>
+    Rs.{{ user.get_profile.max_reimbursment }} for the year {{ current_year }}.</p>
 
 
 <div class="modal hide fade" id="expense-detail" role="dialog" area-hidden="true">

@@ -1,5 +1,6 @@
 # Django settings for expensify project.
 import os
+
 PROJECT_DIR = os.path.dirname(__file__) 
 
 
@@ -7,6 +8,8 @@ ADMINS = (
     ('Bhaskar', 'bhaskar@agiliq.com'),
     ('Shabda Raaj', 'shabda@agiliq.com'),
 )
+
+AUTH_PROFILE_MODULE = "exapp.UserProfile"
 
 MANAGERS = ADMINS
 SERVER_EMAIL = 'expensify@agiliq.com'
@@ -105,6 +108,16 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.static",
+    "django.core.context_processors.media",
+    "django.core.context_processors.request",
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -193,3 +206,4 @@ except ImportError:
     OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
 
 TEMPLATE_DEBUG = DEBUG
+
