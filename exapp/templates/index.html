@@ -2,6 +2,7 @@
 {% block content %}
 
 {% if profile and user.is_authenticated %}
+<h2> You have {{ pending_count }} pending claim{{ pending_count|pluralize:"s" }},  {{ rejected_count }} rejected claim{{ rejected_count|pluralize:"s" }} and {{ claimed_count }} approved claim{{ claimed_count|pluralize:"s" }}</h2>
 <table class="table  table-bordered table-disable-hover expense-list">
 <tr>
 <td> Expense Category </td>

@@ -1,8 +1,10 @@
 
+
 {% extends "base.html" %}
 {% block content %}
 <form action='' method='post' >
     {% csrf_token %}
+    <h2> You have {{ pending_count }} pending claim{{ pending_count|pluralize:"s" }} and rejected {{ rejected_count }} claim{{ rejected_count|pluralize:"s" }}</h2>
     <table class='table table-bordered table-disable-hover expense-list' >
         <th><input type='checkbox' id='check_all' /></th>
         <th>Name</th>

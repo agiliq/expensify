@@ -30,9 +30,13 @@ def profile(request):
     total_amount = 0
     for exp in e:
         total_amount += exp.amount
+    rejected_count = e.filter(rejected=True, status=False).count()
+    pending_count = e.filter(rejected=False, status=False).count()
+    claimed_count = e.filter(rejected=False, status=True).count()
     return render(request, 'index.html', {'details': e,
         'profile':'profile', 'current_year': current_year,
-                        'total_amount': total_amount})
+        'total_amount': total_amount, 'rejected_count': rejected_count,
+        'pending_count': pending_count, 'claimed_count': claimed_count})
 
 @login_required
 def create(request):
@@ -88,7 +92,10 @@ def all_claims(request):
             exp_obj.rejected = reject
             exp_obj.save()
     expenses = Expense.objects.filter(status=False)
-    data = {'expenses': expenses}
+    rejected_count = expenses.filter(rejected=True).count()
+    pending_count = expenses.filter(rejected=False).count()
+    data = {'expenses': expenses, 'rejected_count': rejected_count,
+            'pending_count': pending_count}
     return render_to_response('all_claims.html', data,
             context_instance=RequestContext(request))
 

@@ -21,9 +21,11 @@ $(".action_button").live
     $("[name='selected']").val selected_claims
     $(@).closest('form').submit()
 
-  $(".expense-list tr").live
+  $(".expense-list tr").slice(1).live
     click: (e) ->
-      e.preventDefault()
+      if e.target.type == "checkbox"
+        return
+
       id = e.id
       if $(".field_name").length > 0
         $(".td_name").text $(@).find(".field_name").text()
