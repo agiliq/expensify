@@ -34,6 +34,13 @@ class Expense(models.Model):
         ordering = ['-date']
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    max_reimbursment = models.PositiveIntegerField(max_length=10)
+
+    def __unicode__(self):
+        return self.user
+
 def notify_via_mail(sender, **kwargs):
     instance = kwargs['instance']
     subject = ""
