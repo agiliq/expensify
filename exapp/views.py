@@ -81,30 +81,27 @@ def all_claims(request):
         selected = request.POST['selected'].split(";")
         if (len(selected) == 0 or selected[0] == u''):
             messages.add_message(request, messages.ERROR, 'Please select atleast one before submitting.')
-            expenses = Expense.objects.filter(status=False)
-            data = {'expenses': expenses}
-            return render_to_response('all_claims.html', data,
-                    context_instance=RequestContext(request))
+        else:
 
-        mark_as = request.POST['mark_as']
+            mark_as = request.POST['mark_as']
 
-        if not ( mark_as == "True" or mark_as == 'rejected'):
-            raise Http404
-        status = False
-        reject = False
-        if mark_as == "True":
-            status = True
+            if not ( mark_as == "True" or mark_as == 'rejected'):
+                raise Http404
+            status = False
             reject = False
-        elif mark_as == "rejected":
-            status = ""
-            reject = True
+            if mark_as == "True":
+                status = True
+                reject = False
+            elif mark_as == "rejected":
+                status = ""
+                reject = True
 
-        for item in selected:
-            exp_obj = Expense.objects.get(id=item)
-            exp_obj.status = status
-            exp_obj.rejected = reject
-            exp_obj.save()
-    expenses = Expense.objects.filter(status=False)
+            for item in selected:
+                exp_obj = Expense.objects.get(id=item)
+                exp_obj.status = status
+                exp_obj.rejected = reject
+                exp_obj.save()
+    expenses = Expense.objects.filter(status=False).order_by('-rejected', 'status')
     rejected_count = expenses.filter(rejected=True).count()
     pending_count = expenses.filter(rejected=False).count()
 
