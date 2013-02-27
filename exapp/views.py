@@ -128,6 +128,7 @@ def all_claims(request):
 @csrf_exempt
 def approved_claims(request):
     expenses = Expense.objects.filter(status=True, rejected=False)
+    approved_count = expenses.count()
     paginator = Paginator(expenses, 10)
     page = request.GET.get('page')
     try:
@@ -136,7 +137,7 @@ def approved_claims(request):
         expenses = paginator.page(1)
     except EmptyPage:
         expenses = paginator.page(paginator.num_pages)
-    data = {'expenses': expenses}
+    data = {'expenses': expenses, 'approved_count': approved_count}
     return render_to_response('approved_claims.html', data,
             context_instance=RequestContext(request))
 

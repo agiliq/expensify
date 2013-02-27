@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 {% block content %}
-    <h2>You have approved {{ expenses.count }} claim{{ expenses.count|pluralize:"s" }} </h2>
+    <h2>You have approved {{ approved_count }} claim{{ approved_count|pluralize:"s" }} </h2>
     <table class='table table-bordered table-disable-hover expense-list' >
         <th>Name</th>
         <th>Category</th>
