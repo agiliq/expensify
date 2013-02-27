@@ -26,7 +26,7 @@ def index(request):
 @login_required
 def profile(request):
     current_year = datetime.now().year
-    e = Expense.objects.filter(usr=request.user, date__year=current_year).order_by('status', '-date')
+    e = Expense.objects.filter(usr=request.user, date__year=current_year).order_by('-rejected', 'status', '-date')
     rejected_count = e.filter(rejected=True, status=False).count()
     pending_count = e.filter(rejected=False, status=False).count()
     claimed_count = e.filter(rejected=False, status=True).count()
