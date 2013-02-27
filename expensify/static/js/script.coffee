@@ -21,7 +21,7 @@ $(".action_button").live
     $("[name='selected']").val selected_claims
     $(@).closest('form').submit()
 
-  $(".expense-list tr").slice(1).live
+  $(".expense-list tr:not(:first-child)").live
     click: (e) ->
       if e.target.type == "checkbox"
         return

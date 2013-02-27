@@ -23,7 +23,7 @@
       $("[name='selected']").val(selected_claims);
       return $(this).closest('form').submit();
     }
-  }, $(".expense-list tr").slice(1).live({
+  }, $(".expense-list tr:not(:first-child)").live({
     click: function(e) {
       var id, url_name_arr;
       if (e.target.type === "checkbox") return;
