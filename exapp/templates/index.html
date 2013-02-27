@@ -5,10 +5,10 @@
 <h2> You have {{ pending_count }} pending claim{{ pending_count|pluralize:"s" }},  {{ rejected_count }} rejected claim{{ rejected_count|pluralize:"s" }} and {{ claimed_count }} approved claim{{ claimed_count|pluralize:"s" }}</h2>
 <table class="table  table-bordered table-disable-hover expense-list">
 <tr>
-<td> Expense Category </td>
-<td> Amount </td>
-<td> Date </td>
-<td>  Status </td>
+<th> Expense Category </th>
+<th> Amount </th>
+<th> Date </th>
+<th>  Status </th>
 </tr>
 
 {% for detail in details %}
