@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import logout
 from django.http import Http404
 from django.contrib import messages
@@ -26,13 +27,25 @@ def index(request):
 def profile(request):
     current_year = datetime.now().year
     e = Expense.objects.filter(usr=request.user, date__year=current_year).order_by('status', '-date')
+    rejected_count = e.filter(rejected=True, status=False).count()
+    pending_count = e.filter(rejected=False, status=False).count()
+    claimed_count = e.filter(rejected=False, status=True).count()
 
     total_amount = 0
     for exp in e:
         total_amount += exp.amount
-    rejected_count = e.filter(rejected=True, status=False).count()
-    pending_count = e.filter(rejected=False, status=False).count()
-    claimed_count = e.filter(rejected=False, status=True).count()
+
+    paginator = Paginator(e, 10)
+    page = request.GET.get('page')
+    try:
+        e = paginator.page(page)
+    except PageNotAnInteger:
+        e = paginator.page(1)
+    except EmptyPage:
+        e = paginator.page(paginator.num_pages)
+
+
+
     return render(request, 'index.html', {'details': e,
         'profile':'profile', 'current_year': current_year,
         'total_amount': total_amount, 'rejected_count': rejected_count,
@@ -94,6 +107,17 @@ def all_claims(request):
     expenses = Expense.objects.filter(status=False)
     rejected_count = expenses.filter(rejected=True).count()
     pending_count = expenses.filter(rejected=False).count()
+
+
+    paginator = Paginator(expenses, 10)
+    page = request.GET.get('page')
+    try:
+        expenses = paginator.page(page)
+    except PageNotAnInteger:
+        expenses = paginator.page(1)
+    except EmptyPage:
+        expenses = paginator.page(paginator.num_pages)
+
     data = {'expenses': expenses, 'rejected_count': rejected_count,
             'pending_count': pending_count}
     return render_to_response('all_claims.html', data,
@@ -104,6 +128,14 @@ def all_claims(request):
 @csrf_exempt
 def approved_claims(request):
     expenses = Expense.objects.filter(status=True, rejected=False)
+    paginator = Paginator(expenses, 10)
+    page = request.GET.get('page')
+    try:
+        expenses = paginator.page(page)
+    except PageNotAnInteger:
+        expenses = paginator.page(1)
+    except EmptyPage:
+        expenses = paginator.page(paginator.num_pages)
     data = {'expenses': expenses}
     return render_to_response('approved_claims.html', data,
             context_instance=RequestContext(request))

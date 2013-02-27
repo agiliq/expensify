@@ -34,6 +34,22 @@
     <input type='submit' class='btn btn-primary  action_button' action='rejected' value='Reject' /> 
 </form>
 
+<div class="pagination">
+    <span class="step-links">
+        {% if expenses.has_previous %}
+            <a href="?page={{ expenses.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ expenses.number }} of {{ expenses.paginator.num_pages }}.
+        </span>
+
+        {% if expenses.has_next %}
+            <a href="?page={{ expenses.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
 
 <div class="modal hide fade" id="expense-detail" role="dialog" area-hidden="true">
   <div class="modal-header">
