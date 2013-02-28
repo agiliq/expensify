@@ -37,12 +37,22 @@ class Expense(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    max_reimbursment = models.PositiveIntegerField(max_length=10)
-    total_requested_amount = models.PositiveIntegerField(max_length=10, default=0)
+    max_reimbursment = models.DecimalField(max_digits=10, default=0,
+                                          decimal_places=0)
+    total_requested_amount = models.DecimalField(max_digits=10, default=0,
+                                                 decimal_places=0)
 
     def __unicode__(self):
         return unicode(self.user)
 
+
+
+def update_request_amount(sender, **kwargs):
+    if kwargs['created']:
+        instance = kwargs['instance']
+        total = instance.amount + instance.usr.get_profile().total_requested_amount
+        UserProfile.objects.filter(user=instance.usr).update(
+                                   total_requested_amount=total)
 
 
 
@@ -74,6 +84,7 @@ def notify_via_mail(sender, **kwargs):
               fail_silently=False)
 
 post_save.connect(notify_via_mail, sender=Expense)
+post_save.connect(update_request_amount, sender=Expense)
 
 
 
