@@ -25,6 +25,8 @@ $(".action_button").live
     click: (e) ->
       if e.target.type == "checkbox"
         return
+      if $(e.target).text() == "Edit"
+        return
 
       id = e.id
       if $(".field_name").length > 0

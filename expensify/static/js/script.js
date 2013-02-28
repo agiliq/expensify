@@ -27,6 +27,7 @@
     click: function(e) {
       var id, url_name_arr;
       if (e.target.type === "checkbox") return;
+      if ($(e.target).text() === "Edit") return;
       id = e.id;
       if ($(".field_name").length > 0) {
         $(".td_name").text($(this).find(".field_name").text());
