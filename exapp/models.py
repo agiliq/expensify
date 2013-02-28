@@ -48,13 +48,20 @@ class UserProfile(models.Model):
 
 
 def update_request_amount(sender, **kwargs):
+    instance = kwargs['instance']
     if kwargs['created']:
-        instance = kwargs['instance']
         total = instance.amount + instance.usr.get_profile().total_requested_amount
-        UserProfile.objects.filter(user=instance.usr).update(
+
+    else:
+        total = instance.amount + instance.usr.get_profile().total_requested_amount - instance.old_amount
+    UserProfile.objects.filter(user=instance.usr).update(
                                    total_requested_amount=total)
 
 
+
+def get_old_amount(sender, instance, *args, **kwargs):
+    if instance.id:
+        instance.old_amount = instance.__class__.objects.get(id=instance.id).amount
 
 
 def notify_via_mail(sender, **kwargs):
@@ -85,6 +92,7 @@ def notify_via_mail(sender, **kwargs):
 
 post_save.connect(notify_via_mail, sender=Expense)
 post_save.connect(update_request_amount, sender=Expense)
+pre_save.connect(get_old_amount, sender=Expense)
 
 
 
