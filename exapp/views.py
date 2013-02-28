@@ -61,7 +61,8 @@ def create(request):
 
 @login_required
 def reimburse(request):
-    form = ExpenseCreationForm(request.POST or None, request.FILES or None)
+    form = ExpenseCreationForm(request.user, request.POST or None,
+                               request.FILES or None)
 
     if form.is_valid():
         form.save(request)
