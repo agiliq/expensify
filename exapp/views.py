@@ -32,10 +32,6 @@ def profile(request):
     pending_count = e.filter(rejected=False, status=False).count()
     claimed_count = e.filter(rejected=False, status=True).count()
 
-    total_amount = 0
-    for exp in e:
-        total_amount += exp.amount
-
     paginator = Paginator(e, 10)
     page = request.GET.get('page')
     try:
@@ -47,7 +43,7 @@ def profile(request):
 
     return render(request, 'index.html', {'details': e,
                   'profile': 'profile', 'current_year': current_year,
-                  'total_amount': total_amount, 'rejected_count': rejected_count,
+                  'rejected_count': rejected_count,
                   'pending_count': pending_count, 'claimed_count': claimed_count})
 
 
