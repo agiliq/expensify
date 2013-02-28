@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import logout
@@ -60,15 +60,30 @@ def create(request):
 
 
 @login_required
-def reimburse(request):
-    form = ExpenseCreationForm(request.user, request.POST or None,
-                               request.FILES or None)
+def reimburse(request, id=None):
 
-    if form.is_valid():
-        form.save(request)
-        return redirect(reverse('profile'))
+    form = ExpenseCreationForm(request.user)
+    if id:
+        e = get_object_or_404(Expense, id=id, usr=request.user)
+        form = ExpenseCreationForm(request.user, instance=e)
 
-    return render(request, 'index.html', {'form': form})
+
+    if request.method == "POST":
+        if id:
+            form = ExpenseCreationForm(request.user, request.POST, request.FILES,
+                                       instance=e)
+        else:
+            form = ExpenseCreationForm(request.user, request.POST, request.FILES)
+
+
+        if form.is_valid():
+            m = form.save(request)
+            return redirect(reverse('profile'))
+
+    data = {'form': form}
+    return render_to_response("index.html", data,
+                              context_instance=RequestContext(request))
+
 
 
 @staff_member_required

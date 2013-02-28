@@ -12,3 +12,5 @@
 }
 */
 .expense-list tr { cursor: pointer; }
+.badge-error-margin { margin-right: 10px; }
+.badge-warning-margin {margin-right: 13px; }

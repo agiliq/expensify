@@ -16,7 +16,9 @@
 <td class='field_category'> {{ detail.category }} </td>
 <td class='field_amount'>  {{ detail.amount }} </td>
 <td class='field_date'>  {{ detail.date }} </td>
-<td class='field_status'><span class='badge {% if detail.rejected %} badge-error {% elif detail.status %} badge-success {% else %} badge-warning {% endif %}'> {% if detail.rejected %} Rejected {% elif detail.status %} Claimed {% else %} Pending {% endif %}  </td>
+<td class='field_status'><span class='badge {% if detail.rejected %} badge-error badge-error-margin {% elif detail.status %} badge-success {% else %} badge-warning badge-warning-margin {% endif %}'> {% if detail.rejected %} Rejected {% elif detail.status %} Claimed {% else %} Pending {% endif %} </span>
+    {% if not detail.status %} <a href='{% url reimburse detail.id %}' class='badge btn btn-primary' >Edit</a> {% endif %}
+</td>
 <input type=hidden class='description' value='{{ detail.description }}' />
 <input type=hidden class='invoice' value='{% if detail.invoice %} {{ detail.invoice.url }};{{ detail.invoice.name }} {% endif %}'  />
 </tr>
@@ -40,7 +42,7 @@
     </span>
 </div>
 
-<p> You have exhausted Rs.{{ user.get_profile.total_requested_amount}} of
+<p> You have exhausted Rs.{{ user.get_profile.total_requested_amount }} of
     Rs.{{ user.get_profile.max_reimbursment }} for the year {{ current_year }}.</p>
 
 

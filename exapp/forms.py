@@ -19,6 +19,12 @@ class ExpenseCreationForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(ExpenseCreationForm, self).__init__(*args, **kwargs)
         self._user = user
+        self.prev_amount = None
+        if "instance" in kwargs:
+            if kwargs['instance']:
+                self.instance = kwargs['instance']
+                self.prev_amount = self.instance.amount
+
 
     def save(self, request, commit=True):
         model = super(ExpenseCreationForm, self).save(commit=False)
@@ -39,11 +45,14 @@ class ExpenseCreationForm(ModelForm):
         elif amount <= 0:
             raise forms.ValidationError("Amount should be greater than 0.")
 
-        
         up = UserProfile.objects.get_or_create(user=self._user)[0]
         prev_total_requested = up.total_requested_amount
         max_reimbursment = up.max_reimbursment
+        if self.prev_amount:
+            prev_total_requested = prev_total_requested - self.prev_amount
         total_requested_amount = prev_total_requested + amount
+
+
         if total_requested_amount > max_reimbursment:
             raise forms.ValidationError("Please enter amount less than %s. " \
                                         "Current amount crosses max reimbursment of %s"
