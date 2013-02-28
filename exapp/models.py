@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.core.mail import send_mail
 
 
@@ -49,11 +49,18 @@ class UserProfile(models.Model):
 
 def update_request_amount(sender, **kwargs):
     instance = kwargs['instance']
-    if kwargs['created']:
-        total = instance.amount + instance.usr.get_profile().total_requested_amount
+    total = 0
+    try:
+        kwargs['created']
+        if kwargs['created']:
+            total = instance.amount + instance.usr.get_profile().total_requested_amount
 
-    else:
-        total = instance.amount + instance.usr.get_profile().total_requested_amount - instance.old_amount
+        else:
+            total = instance.amount + instance.usr.get_profile().total_requested_amount - instance.old_amount
+    except KeyError:
+        total = instance.usr.get_profile().total_requested_amount - instance.amount
+
+
     UserProfile.objects.filter(user=instance.usr).update(
                                    total_requested_amount=total)
 
@@ -93,6 +100,7 @@ def notify_via_mail(sender, **kwargs):
 post_save.connect(notify_via_mail, sender=Expense)
 post_save.connect(update_request_amount, sender=Expense)
 pre_save.connect(get_old_amount, sender=Expense)
+post_delete.connect(update_request_amount, sender=Expense)
 
 
 
