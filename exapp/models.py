@@ -53,15 +53,19 @@ def update_request_amount(sender, **kwargs):
     try:
         kwargs['created']
         if kwargs['created']:
-            total = instance.amount + instance.usr.get_profile().total_requested_amount
+            total = instance.amount + \
+                    instance.usr.get_profile().total_requested_amount
 
         else:
-            total = instance.amount + instance.usr.get_profile().total_requested_amount - instance.old_amount
+            total = instance.amount + \
+                    instance.usr.get_profile().total_requested_amount - \
+                    instance.old_amount
     except KeyError:
-        total = instance.usr.get_profile().total_requested_amount - instance.amount
+        total = instance.usr.get_profile().total_requested_amount - \
+                    instance.amount
 
-
-    UserProfile.objects.filter(user=instance.usr).update(
+    if not instance.status:
+        UserProfile.objects.filter(user=instance.usr).update(
                                    total_requested_amount=total)
 
 
