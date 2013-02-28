@@ -65,6 +65,8 @@ def reimburse(request, id=None):
     form = ExpenseCreationForm(request.user)
     if id:
         e = get_object_or_404(Expense, id=id, usr=request.user)
+        if e.status:
+            raise Http404
         form = ExpenseCreationForm(request.user, instance=e)
 
 
