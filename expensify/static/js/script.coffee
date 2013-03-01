@@ -36,7 +36,7 @@ $(".action_button").live
       $(".td_category").text $(@).find(".field_category").text()
       $(".td_amount").text $(@).find(".field_amount").text()
       $(".td_date").text $(@).find(".field_date").text()
-      $(".td_status").text $(@).find(".field_status").text()
+      $(".td_status").text $(@).find(".field_status span.badge").text()
       $(".td_description").text $(@).find(".description").val()
       if $(@).find(".invoice").val().trim().length > 0
         url_name_arr = $(@).find(".invoice").val().split(";")
