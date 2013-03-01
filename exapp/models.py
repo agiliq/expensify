@@ -39,40 +39,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     max_reimbursment = models.DecimalField(max_digits=10, default=0,
                                           decimal_places=0)
-    total_requested_amount = models.DecimalField(max_digits=10, default=0,
-                                                 decimal_places=0)
 
     def __unicode__(self):
         return unicode(self.user)
-
-
-
-def update_request_amount(sender, **kwargs):
-    instance = kwargs['instance']
-    total = 0
-    try:
-        kwargs['created']
-        if kwargs['created']:
-            total = instance.amount + \
-                    instance.usr.get_profile().total_requested_amount
-
-        else:
-            total = instance.amount + \
-                    instance.usr.get_profile().total_requested_amount - \
-                    instance.old_amount
-    except KeyError:
-        total = instance.usr.get_profile().total_requested_amount - \
-                    instance.amount
-
-    if not instance.status:
-        UserProfile.objects.filter(user=instance.usr).update(
-                                   total_requested_amount=total)
-
-
-
-def get_old_amount(sender, instance, *args, **kwargs):
-    if instance.id:
-        instance.old_amount = instance.__class__.objects.get(id=instance.id).amount
 
 
 def notify_via_mail(sender, **kwargs):
@@ -101,11 +70,8 @@ def notify_via_mail(sender, **kwargs):
     send_mail(subject, email_body, 'expensify@agiliq.com', recipients,
               fail_silently=False)
 
-post_save.connect(notify_via_mail, sender=Expense)
-post_save.connect(update_request_amount, sender=Expense)
-pre_save.connect(get_old_amount, sender=Expense)
-post_delete.connect(update_request_amount, sender=Expense)
 
+post_save.connect(notify_via_mail, sender=Expense)
 
 
 def change_username(sender, **kwargs):
