@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django.db.models import Sum
 from django import forms
 from models import Expense, ExpenseCategory, UserProfile
 
@@ -46,7 +47,10 @@ class ExpenseCreationForm(ModelForm):
             raise forms.ValidationError("Amount should be greater than 0.")
 
         up = UserProfile.objects.get_or_create(user=self._user)[0]
-        prev_total_requested = up.total_requested_amount
+        prev_total_requested =\
+            Expense.objects.filter(usr=self._user, rejected=False).aggregate(
+                                   Sum('amount'))['amount__sum']
+
         max_reimbursment = up.max_reimbursment
         if self.prev_amount:
             prev_total_requested = prev_total_requested - self.prev_amount

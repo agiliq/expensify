@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -32,6 +33,9 @@ def profile(request):
     pending_count = e.filter(rejected=False, status=False).count()
     claimed_count = e.filter(rejected=False, status=True).count()
 
+    total_requested_amount =\
+        Expense.objects.filter(usr=request.user, rejected=False).aggregate(
+                               Sum('amount'))['amount__sum']
     paginator = Paginator(e, 10)
     page = request.GET.get('page')
     try:
@@ -43,6 +47,7 @@ def profile(request):
 
     return render(request, 'index.html', {'details': e,
                   'profile': 'profile', 'current_year': current_year,
+                  'total_requested_amount': total_requested_amount,
                   'rejected_count': rejected_count,
                   'pending_count': pending_count, 'claimed_count': claimed_count})
 
@@ -108,7 +113,7 @@ def all_claims(request):
                 status = True
                 reject = False
             elif mark_as == "rejected":
-                status = ""
+                status = False
                 reject = True
 
             for item in selected:
