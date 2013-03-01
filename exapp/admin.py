@@ -4,8 +4,8 @@ from models import ExpenseCategory, Expense, UserProfile
 
 
 class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ('usr', 'category', 'amount', 'status', 'description')
-    list_filter = ('usr', 'category', 'status')
+    list_display = ('usr', 'category', 'amount', 'status', 'rejected', 'description')
+    list_filter = ('usr', 'category', 'status', 'rejected')
 
 
 class ExpenseCategoryAdmin(admin.ModelAdmin):
@@ -13,7 +13,7 @@ class ExpenseCategoryAdmin(admin.ModelAdmin):
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'max_reimbursment', 'total_requested_amount')
+    list_display = ('user', 'max_reimbursment')
 
 admin.site.register(ExpenseCategory, ExpenseCategoryAdmin)
 admin.site.register(Expense, ExpenseAdmin)
