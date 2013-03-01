@@ -50,6 +50,8 @@ class ExpenseCreationForm(ModelForm):
         prev_total_requested =\
             Expense.objects.filter(usr=self._user, rejected=False).aggregate(
                                    Sum('amount'))['amount__sum']
+        if not prev_total_requested:
+            prev_total_requested = 0
 
         max_reimbursment = up.max_reimbursment
         if self.prev_amount:

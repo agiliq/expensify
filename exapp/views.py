@@ -36,6 +36,8 @@ def profile(request):
     total_requested_amount =\
         Expense.objects.filter(usr=request.user, rejected=False).aggregate(
                                Sum('amount'))['amount__sum']
+    if not total_requested_amount:
+        total_requested_amount = 0
     paginator = Paginator(e, 10)
     page = request.GET.get('page')
     try:
