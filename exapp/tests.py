@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.core import mail
 
-from exapp.models import ExpenseCategory, Expense
+from exapp.models import ExpenseCategory, Expense, UserProfile
 
 
 class SimpleViews(TestCase):
@@ -12,6 +12,10 @@ class SimpleViews(TestCase):
         self.category = ExpenseCategory.objects.create(title = "Foo",
             description = "Bar",
             max_limit=200)
+
+        self.user_profile = UserProfile.objects.get_or_create(user=self.user)[0]
+        self.user_profile.max_reimbursment = 5000
+        self.user_profile.save()
 
     def test_index(self):
         "Index reponds correctly to both logged in and logged out users"
