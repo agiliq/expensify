@@ -1,4 +1,4 @@
-django
+django==1.4.3
 django-openid-auth
 south
 gunicorn
