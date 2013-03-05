@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'exapp',
     'south',
     'django_openid_auth',
+    'parsley',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

@@ -3,14 +3,17 @@ from django.db.models import Sum
 from django import forms
 from models import Expense, ExpenseCategory, UserProfile
 
+from parsley.decorators import parsleyfy
 
 
+@parsleyfy
 class CategoryCreationForm(ModelForm):
 
     class Meta:
         model = ExpenseCategory
 
 
+@parsleyfy
 class ExpenseCreationForm(ModelForm):
 
     class Meta:
