@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% load crispy_forms_tags %}
 {% if profile and user.is_authenticated %}
 <h2> You have {{ pending_count }} pending claim{{ pending_count|pluralize:"s" }},  {{ rejected_count }} rejected claim{{ rejected_count|pluralize:"s" }} and {{ claimed_count }} approved claim{{ claimed_count|pluralize:"s" }}</h2>
 <table class="table  table-bordered table-disable-hover expense-list">
@@ -93,10 +94,10 @@
 
 <form method="POST" action"" enctype='multipart/form-data' data-validate='parsley' > 
   {% csrf_token %}
+  {{ form|as_crispy_errors }}
     {% for field in form %}
     <div class="fieldWrapper">
-      {{ field.errors }}
-      <p>{{ field.label_tag }} {{ field }}</p>
+      <p> {{ field|as_crispy_field }}</p>
     </div>
     {% endfor %}
   <input type="submit" value="Claim" class='btn btn-primary' />

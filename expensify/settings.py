@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'south',
     'django_openid_auth',
     'parsley',
+    'crispy_forms',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

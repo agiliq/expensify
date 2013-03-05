@@ -6,3 +6,4 @@ MySQL-python
 # uninstall python-openid and install git+https://github.com/adieu/python-openid
 -e git+https://github.com/adieu/python-openid#egg=python-openid
 django-parsley
+django-crispy-forms
