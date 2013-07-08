@@ -1,5 +1,7 @@
 from django.db.models import Sum
-from django.shortcuts import render, redirect, render_to_response, get_object_or_404
+from django.shortcuts import (
+    render, redirect, render_to_response, get_object_or_404
+)
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import logout
@@ -28,14 +30,17 @@ def index(request):
 @login_required
 def profile(request):
     current_year = datetime.now().year
-    e = Expense.objects.filter(usr=request.user, date__year=current_year).order_by('-rejected', 'status', '-date')
+    e = Expense.objects.filter(
+        usr=request.user, date__year=current_year
+    ).order_by('-rejected', 'status', '-date')
     rejected_count = e.filter(rejected=True, status=False).count()
     pending_count = e.filter(rejected=False, status=False).count()
     claimed_count = e.filter(rejected=False, status=True).count()
 
     total_requested_amount =\
-        Expense.objects.filter(usr=request.user, rejected=False).aggregate(
-                               Sum('amount'))['amount__sum']
+        Expense.objects.filter(
+            usr=request.user, rejected=False
+        ).aggregate(Sum('amount'))['amount__sum']
     if not total_requested_amount:
         total_requested_amount = 0
     paginator = Paginator(e, 10)
@@ -51,7 +56,8 @@ def profile(request):
                   'profile': 'profile', 'current_year': current_year,
                   'total_requested_amount': total_requested_amount,
                   'rejected_count': rejected_count,
-                  'pending_count': pending_count, 'claimed_count': claimed_count})
+                  'pending_count': pending_count,
+                  'claimed_count': claimed_count})
 
 
 @login_required
@@ -63,7 +69,10 @@ def create(request):
         form.save()
         return redirect(reverse('reimburse'))
 
-    return render(request, 'index.html', {'form': form, 'category': 'category'})
+    return render(
+        request, 'index.html',
+        {'form': form, 'category': 'category'}
+    )
 
 
 @login_required
@@ -76,23 +85,21 @@ def reimburse(request, id=None):
             raise Http404
         form = ExpenseCreationForm(request.user, instance=e)
 
-
     if request.method == "POST":
         if id:
-            form = ExpenseCreationForm(request.user, request.POST, request.FILES,
-                                       instance=e)
+            form = ExpenseCreationForm(
+                request.user, request.POST, request.FILES, instance=e)
         else:
-            form = ExpenseCreationForm(request.user, request.POST, request.FILES)
-
+            form = ExpenseCreationForm(
+                request.user, request.POST, request.FILES)
 
         if form.is_valid():
-            m = form.save(request)
+            form.save(request)
             return redirect(reverse('profile'))
 
     data = {'form': form}
     return render_to_response("index.html", data,
                               context_instance=RequestContext(request))
-
 
 
 @staff_member_required
@@ -101,8 +108,9 @@ def all_claims(request):
     if request.method == 'POST':
         selected = request.POST['selected'].split(";")
         if (len(selected) == 0 or selected[0] == u''):
-            messages.add_message(request, messages.ERROR,
-                                 'Please select atleast one before submitting.')
+            messages.add_message(
+                request, messages.ERROR,
+                'Please select atleast one before submitting.')
         else:
 
             mark_as = request.POST['mark_as']
@@ -123,7 +131,8 @@ def all_claims(request):
                 exp_obj.status = status
                 exp_obj.rejected = reject
                 exp_obj.save()
-    expenses = Expense.objects.filter(status=False).order_by('-rejected', 'status')
+    expenses = Expense.objects.filter(status=False).\
+        order_by('-rejected', 'status')
     rejected_count = expenses.filter(rejected=True).count()
     pending_count = expenses.filter(rejected=False).count()
 

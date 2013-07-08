@@ -29,7 +29,6 @@ class ExpenseCreationForm(ModelForm):
                 self.instance = kwargs['instance']
                 self.prev_amount = self.instance.amount
 
-
     def save(self, request, commit=True):
         model = super(ExpenseCreationForm, self).save(commit=False)
         model.usr = request.user
@@ -51,8 +50,9 @@ class ExpenseCreationForm(ModelForm):
 
         up = UserProfile.objects.get_or_create(user=self._user)[0]
         prev_total_requested =\
-            Expense.objects.filter(usr=self._user, rejected=False).aggregate(
-                                   Sum('amount'))['amount__sum']
+            Expense.objects.filter(
+                usr=self._user, rejected=False
+            ).aggregate(Sum('amount'))['amount__sum']
         if not prev_total_requested:
             prev_total_requested = 0
 
@@ -61,10 +61,10 @@ class ExpenseCreationForm(ModelForm):
             prev_total_requested = prev_total_requested - self.prev_amount
         total_requested_amount = prev_total_requested + amount
 
-
         if total_requested_amount > max_reimbursment:
-            raise forms.ValidationError("Please enter amount less than %s. " \
-                                        "Current amount crosses max reimbursment of %s"
-                                        % (max_reimbursment-prev_total_requested+1,
-                                           max_reimbursment))
+            raise forms.ValidationError(
+                "Please enter amount less than %s. "
+                "Current amount crosses max reimbursment of %s"
+                % (max_reimbursment-prev_total_requested+1,
+                    max_reimbursment))
         return amount

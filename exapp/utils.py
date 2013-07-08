@@ -19,12 +19,10 @@ def populate_userprofile():
     '''
     users = User.objects.all()
     for u in users:
-        t = Expense.objects.filter(usr=u).aggregate(Sum('amount'))['amount__sum']
+        t = Expense.objects.filter(usr=u).\
+            aggregate(Sum('amount'))['amount__sum']
         if not t:
             t = 0
         up = UserProfile.objects.get_or_create(user=u)[0]
         up.total_requested_amount = t
         up.save()
-
-
-
