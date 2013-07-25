@@ -1,9 +1,9 @@
 django==1.4.5
-django-openid-auth
-south
-gunicorn
-MySQL-python
+django-openid-auth==0.4
+south==0.7.6
+gunicorn==0.17.0
+MySQL-python==1.2.4
 # uninstall python-openid and install git+https://github.com/adieu/python-openid
 -e git+https://github.com/adieu/python-openid#egg=python-openid
-django-parsley
-django-crispy-forms
+django-parsley==0.0.2a0
+django-crispy-forms==1.2.3
