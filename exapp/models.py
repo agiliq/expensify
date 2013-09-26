@@ -37,7 +37,7 @@ class Expense(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     max_reimbursment = models.DecimalField(
-        max_digits=10, default=0, decimal_places=0)
+        max_digits=10, default=10000, decimal_places=0)
 
     def __unicode__(self):
         return unicode(self.user)
