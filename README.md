@@ -3,10 +3,11 @@ Expensify
 ==========
 
 [![Build Status](https://travis-ci.org/agiliq/expensify.png?branch=master)](https://travis-ci.org/agiliq/expensify)
+[![Coverage Status](https://coveralls.io/repos/agiliq/expensify/badge.png)](https://coveralls.io/r/agiliq/expensify)
 
 ### What is it?
 
-A Django app to claim and track your reimbursements and expense claims. 
+A Django app to claim and track your reimbursements and expense claims.
 
 ### Features
 
