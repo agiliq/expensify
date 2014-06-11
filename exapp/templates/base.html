@@ -21,7 +21,7 @@
         <div class="container">
           <!-- Be sure to leave the brand out there if you want it shown -->
           <a class="brand" href="/">Agiliq Reimbursement Tracker</a>
-          
+
           <!-- Everything you want hidden at 940px or less, place within here -->
           <div class="nav-collapse">
             <ul class="nav">
@@ -30,19 +30,19 @@
               <li class="divider-vertical"></li>
               {% if user.is_authenticated %}
                 {% if user.is_staff %}
-                    <li><a href='{% url all_claims %}'>All Claims</a></li>
-                    <li><a href='{% url approved_claims %}'>Approved Claims</a></li>
+                    <li><a href='{% url "all_claims" %}'>All Claims</a></li>
+                    <li><a href='{% url "approved_claims" %}'>Approved Claims</a></li>
                 {% endif %}
-              <li><a href="{% url profile %}">Personal Claims</a></li>
-              <li><a href="{% url reimburse %}">Claim a Reimbursement</a></li>
-              <li><a href="{% url oidlogout %}">Logout</a></li>
+              <li><a href="{% url 'profile' %}">Personal Claims</a></li>
+              <li><a href="{% url 'reimburse' %}">Claim a Reimbursement</a></li>
+              <li><a href="{% url 'oidlogout' %}">Logout</a></li>
               {% else %}
-              <li><a href="{% url openid-login %}">Login</a></li>
+              <li><a href="{% url 'openid-login' %}">Login</a></li>
               {% endif %}
             </ul>
             <!-- .nav, .navbar-search, .navbar-form, etc -->
           </div>
-          
+
         </div>
       </div>
     </div>

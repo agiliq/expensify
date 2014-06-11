@@ -18,7 +18,7 @@
 <td class='field_amount'>  {{ detail.amount }} </td>
 <td class='field_date'>  {{ detail.date }} </td>
 <td class='field_status'><span class='badge {% if detail.rejected %} badge-error badge-error-margin {% elif detail.status %} badge-success {% else %} badge-warning badge-warning-margin {% endif %}'> {% if detail.rejected %} Rejected {% elif detail.status %} Claimed {% else %} Pending {% endif %} </span>
-    {% if not detail.status %} <a href='{% url reimburse detail.id %}' class='badge btn btn-primary' >Edit</a> {% endif %}
+    {% if not detail.status %} <a href='{% url "reimburse" detail.id %}' class='badge btn btn-primary' >Edit</a> {% endif %}
 </td>
 <input type=hidden class='description' value='{{ detail.description }}' />
 <input type=hidden class='invoice' value='{% if detail.invoice %} {{ detail.invoice.url }};{{ detail.invoice.name }} {% endif %}'  />
@@ -92,7 +92,7 @@
 {% if form %}
 
 
-<form method="POST" action"" enctype='multipart/form-data' data-validate='parsley' > 
+<form method="POST" action"" enctype='multipart/form-data' data-validate='parsley' >
   {% csrf_token %}
   {{ form|as_crispy_errors }}
     {% for field in form %}
@@ -104,7 +104,7 @@
 </form>
 
 {% if not category and not login%}
-<a href="{% url create %}"> Add another category. </a>
+<a href="{% url 'create' %}"> Add another category. </a>
 {% endif %}
 
 
@@ -115,7 +115,7 @@
 
 {% endif %}
 
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" /> 
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
 
 {% endblock content %}
 
