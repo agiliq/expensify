@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, pre_save 
+from django.db.models.signals import post_save, pre_save
 from django.core.mail import send_mail
 
 
@@ -35,7 +35,7 @@ class Expense(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='exapp_user')
     max_reimbursment = models.DecimalField(
         max_digits=10, default=10000, decimal_places=0)
 
