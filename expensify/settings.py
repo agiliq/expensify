@@ -1,7 +1,7 @@
 # Django settings for expensify project.
 import os
 
-PROJECT_DIR = os.path.dirname(__file__) 
+PROJECT_DIR = os.path.dirname(__file__)
 
 
 ADMINS = (
@@ -14,6 +14,7 @@ AUTH_PROFILE_MODULE = "exapp.UserProfile"
 MANAGERS = ADMINS
 SERVER_EMAIL = 'expensify@agiliq.com'
 DEFAULT_FROM_EMAIL = 'expensify@agiliq.com'
+LEAVE_TRACKER_RECIPIENT = 'shabda@agiliq.com'
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -102,7 +103,7 @@ ROOT_URLCONF = 'expensify.urls'
 WSGI_APPLICATION = 'expensify.wsgi.application'
 
 TEMPLATE_DIRS = (
-  
+
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

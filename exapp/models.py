@@ -47,9 +47,7 @@ def notify_via_mail(sender, **kwargs):
     instance = kwargs['instance']
     subject = ""
     email_body = ""
-    recipients = \
-        list(User.objects.filter(is_superuser=True).values_list('email',
-             flat=True))
+    recipients = [settings.LEAVE_TRACKER_RECIPIENT]
     recipients.append(instance.usr.email)
 
     if kwargs['created']:
