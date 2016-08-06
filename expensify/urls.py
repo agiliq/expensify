@@ -9,6 +9,8 @@ urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('exapp.urls')),
+    url('google/', include('social.apps.django_app.urls', namespace='social')),
+    url('google/login/google-oauth2/', 'social.apps.django_app.views.auth', name='login')
     
 )
 
