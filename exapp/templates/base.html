@@ -37,9 +37,9 @@
                 {% endif %}
               <li><a href="{% url 'profile' %}">Personal Claims</a></li>
               <li><a href="{% url 'reimburse' %}">Claim a Reimbursement</a></li>
-              <li><a href="{% url 'oidlogout' %}">Logout</a></li>
+              <li><a href="{% url 'auth_logout' %}">Logout</a></li>
               {% else %}
-              <li><a href="{% url 'openid-login' %}">Login</a></li>
+              <li><a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login</a></li>
               {% endif %}
             </ul>
             <!-- .nav, .navbar-search, .navbar-form, etc -->

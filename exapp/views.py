@@ -4,7 +4,7 @@ from django.shortcuts import (
 )
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth import logout
+from django.contrib.auth import logout as auth_logout
 from django.http import Http404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -18,14 +18,17 @@ from forms import ExpenseCreationForm, CategoryCreationForm
 from datetime import datetime
 
 
-def oidlogout(request):
-    logout(request)
-    return redirect('/')
-
-
 def index(request):
-    return render(request, 'index.html', {})
+   context = RequestContext(request,
+                           {'request': request,
+                            'user': request.user})
+   return render_to_response('index.html',
+                             context_instance=context)
 
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
 
 @login_required
 def profile(request):

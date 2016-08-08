@@ -11,6 +11,7 @@ class CategoryCreationForm(ModelForm):
 
     class Meta:
         model = ExpenseCategory
+        fields = '__all__'
 
 
 @parsleyfy

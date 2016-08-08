@@ -1,7 +1,8 @@
+from .local_settings import *
 # Django settings for expensify project.
 import os
 
-PROJECT_DIR = os.path.dirname(__file__)
+
 
 
 ADMINS = (
@@ -19,6 +20,7 @@ LEAVE_TRACKER_RECIPIENT = 'shabda@agiliq.com'
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # On Unix systems, a value of None will cause Django to use the same
+
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
@@ -41,13 +43,11 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-
-
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = PROJECT_DIR+'/static'
+#STATIC_ROOT = PROJECT_DIR+'/static'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -55,7 +55,7 @@ STATIC_URL = '/static/'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = STATIC_ROOT+'/media'
+MEDIA_ROOT = PROJECT_DIR+'/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -64,9 +64,7 @@ MEDIA_URL = '/static/media/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_DIR, "static"),
 )
 
 # List of finder classes that know how to find static files in
@@ -117,6 +115,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 INSTALLED_APPS = (
@@ -129,17 +129,19 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'exapp',
-    'south',
-    'django_openid_auth',
     'parsley',
     'crispy_forms',
+    'social.apps.django_app.default',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django_openid_auth.auth.OpenIDBackend',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
+    'django_openid_auth.auth.OpenIDBackend',
 )
 
 # Should users be created when new OpenIDs are used to log in?
@@ -155,7 +157,7 @@ OPENID_UPDATE_DETAILS_FROM_SREG = True
 OPENID_SSO_SERVER_URL = 'https://google.com/accounts/o8/site-xrds?hd=agiliq.com'
 
 # Tell django.contrib.auth to use the OpenID signin URLs.
-LOGIN_URL = '/openid/login/'
+#LOGIN_URL = '/openid/login/'
 LOGIN_REDIRECT_URL = '/'
 
 # Should django_auth_openid be used to sign into the admin interface?
@@ -206,7 +208,7 @@ except ImportError:
     }
 
 
-    OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
+OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
 
 TEMPLATE_DEBUG = DEBUG
 
