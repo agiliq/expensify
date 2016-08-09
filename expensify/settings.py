@@ -2,6 +2,8 @@
 # Django settings for expensify project.
 import os
 
+PROJECT_DIR=os.path.dirname(__file__)
+
 
 
 
