@@ -1,4 +1,4 @@
-from .local_settings import *
+#from .local_settings import *
 # Django settings for expensify project.
 import os
 
